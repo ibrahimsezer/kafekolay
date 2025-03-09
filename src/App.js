@@ -1,13 +1,43 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
+import { useState, useEffect } from 'react';
+import { auth } from './firebase';
 import Navbar from './components/Navbar';
-import Dashboard from './pages/Dashboard';
+import Dashboard from './pages/dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Tables from './pages/Tables';
 
 function App() {
-  // This would typically come from your auth context/state management
-  const isAuthenticated = true;
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsAuthenticated(!!user);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+      setIsAuthenticated(false);
+      // Redirect will happen automatically due to auth state change
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
+      </div>
+    );
+  }
 
   return (
     <Router>
@@ -45,6 +75,14 @@ function App() {
                 ) : (
                   <Navigate to="/login" replace />
                 )
+              }
+            />
+            <Route
+              path='/quit'
+              element={
+                <div onClick={handleLogout}>
+                  <Navigate to="/login" replace />
+                </div>
               }
             />
           </Routes>

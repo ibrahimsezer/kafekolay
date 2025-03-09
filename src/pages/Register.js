@@ -1,16 +1,47 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
 import Button from '../components/Button';
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Kayıt işlemleri burada yapılacak
-    console.log('Register attempt with:', { email, password, confirmPassword });
+    setError('');
+
+    if (password !== confirmPassword) {
+      return setError('Şifreler eşleşmiyor');
+    }
+
+    if (password.length < 6) {
+      return setError('Şifre en az 6 karakter olmalıdır');
+    }
+
+    try {
+      setLoading(true);
+      await createUserWithEmailAndPassword(auth, email, password);
+      navigate('/dashboard');
+    } catch (error) {
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          setError('Bu email adresi zaten kullanımda');
+          break;
+        case 'auth/invalid-email':
+          setError('Geçersiz email adresi');
+          break;
+        default:
+          setError('Kayıt olurken bir hata oluştu');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -66,9 +97,14 @@ const Register = () => {
             />
           </div>
           
+          {error && (
+            <div className="text-red-500 text-sm text-center">
+              {error}
+            </div>
+          )}
           <div>
-            <Button type="submit" className="w-full">
-              Kayıt Ol
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? 'Kayıt Yapılıyor...' : 'Kayıt Ol'}
             </Button>
           </div>
         </form>

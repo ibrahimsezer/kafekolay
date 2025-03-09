@@ -1,15 +1,39 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
 import Button from '../components/Button';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Login işlemleri burada yapılacak
-    console.log('Login attempt with:', { email, password });
+    setError('');
+
+    try {
+      setLoading(true);
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate('/dashboard');
+    } catch (error) {
+      switch (error.code) {
+        case 'auth/user-not-found':
+        case 'auth/wrong-password':
+          setError('Email veya şifre hatalı');
+          break;
+        case 'auth/invalid-email':
+          setError('Geçersiz email adresi');
+          break;
+        default:
+          setError('Giriş yapılırken bir hata oluştu');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -50,9 +74,14 @@ const Login = () => {
             />
           </div>
           
+          {error && (
+            <div className="text-red-500 text-sm text-center">
+              {error}
+            </div>
+          )}
           <div>
-            <Button type="submit" className="w-full">
-              Giriş Yap
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? 'Giriş Yapılıyor...' : 'Giriş Yap'}
             </Button>
           </div>
         </form>
