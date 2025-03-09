@@ -84,55 +84,103 @@ const Dashboard = () => {
 
         <form onSubmit={handleAddItem} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div>
-              <label htmlFor="itemName" className="block text-sm font-medium text-gray-700 mb-1">
+            <div className="relative group">
+              <label 
+                htmlFor="itemName" 
+                className="block text-sm font-medium text-gray-700 mb-1 group-hover:text-orange-500 transition-colors duration-300"
+              >
                 Ürün Adı
               </label>
-              <input
-                id="itemName"
-                type="text"
-                value={newItem.name}
-                onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-300 hover:border-orange-300"
-                placeholder="Ürün adı"
-              />
+              <div className="relative">
+                <input
+                  id="itemName"
+                  type="text"
+                  value={newItem.name}
+                  onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
+                  required
+                  className="w-full pl-10 pr-3 py-2 border-2 border-gray-300 rounded-md 
+                    focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500
+                    transition-all duration-300 hover:border-orange-300
+                    placeholder-gray-400 shadow-sm"
+                  placeholder="Ürün adı giriniz..."
+                />
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-orange-500 transition-colors duration-300">
+                  🍽️
+                </span>
+                <div className="absolute inset-0 w-full h-full rounded-md bg-orange-100 opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none"></div>
+              </div>
+              <p className="mt-1 text-xs text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                Menüde görünecek ürün adını giriniz
+              </p>
             </div>
 
             <div>
               <label htmlFor="itemPrice" className="block text-sm font-medium text-gray-700 mb-1">
                 Fiyat (TL)
               </label>
-              <input
-                id="itemPrice"
-                type="number"
-                value={newItem.price}
-                onChange={(e) => setNewItem({ ...newItem, price: e.target.value })}
-                required
-                min="0"
-                step="0.01"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-300 hover:border-orange-300"
-                placeholder="0.00"
-              />
+              <div className="relative">
+                <input
+                  id="itemPrice"
+                  type="number"
+                  value={newItem.price}
+                  onChange={(e) => setNewItem({ ...newItem, price: e.target.value })}
+                  required
+                  min="0"
+                  step="0.01"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-300 hover:border-orange-300"
+                  placeholder="0.00"
+                />
+              </div>
             </div>
 
-            <div>
-              <label htmlFor="itemCategory" className="block text-sm font-medium text-gray-700 mb-1">
-                Kategori
-              </label>
-              <select
-                id="itemCategory"
-                value={newItem.category}
-                onChange={(e) => setNewItem({ ...newItem, category: e.target.value })}
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-300 hover:border-orange-300"
-              >
-                <option value="">Kategori seçin</option>
-                {categories.map(category => (
-                  <option key={category} value={category}>{category}</option>
-                ))}
-              </select>
-            </div>
+<div className="w-full">
+  <label htmlFor="itemCategory" className="block text-sm font-medium text-gray-700 mb-3">
+    Kategori
+  </label>
+  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+    {categories.map(category => (
+      <div
+        key={category}
+        onClick={() => setNewItem({ ...newItem, category })}
+        className={`
+          cursor-pointer rounded-lg p-4 transition-all duration-300
+          ${newItem.category === category 
+            ? 'bg-orange-500 text-white shadow-lg transform -translate-y-1' 
+            : 'bg-white border-2 border-gray-200 hover:border-orange-300 hover:shadow-md'
+          }
+        `}
+      >
+        <div className="flex flex-col items-center space-y-2">
+          {/* Category Icons - You can replace these with actual icons */}
+          <div className={`
+            text-2xl mb-2
+            ${newItem.category === category ? 'text-white' : 'text-orange-500'}
+          `}>
+            {category === 'Burgerler' && '🍔'}
+            {category === 'Pizza' && '🍕'}
+            {category === 'Salatalar' && '🥗'}
+            {category === 'İçecekler' && '🥤'}
+            {category === 'Tatlılar' && '🍰'}
+          </div>
+          <span className="text-center font-medium text-sm">{category}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+  {/* Hidden select for form validation */}
+  <select
+    id="itemCategory"
+    value={newItem.category}
+    onChange={(e) => setNewItem({ ...newItem, category: e.target.value })}
+    required
+    className="sr-only"
+  >
+    <option value="">Kategori seçin</option>
+    {categories.map(category => (
+      <option key={category} value={category}>{category}</option>
+    ))}
+  </select>
+</div>
 
             <div>
               <label htmlFor="itemImage" className="block text-sm font-medium text-gray-700 mb-1">
