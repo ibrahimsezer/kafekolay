@@ -52,12 +52,13 @@ const Tables = () => {
       number: tableCount + 1,
       orders: []
     };
-    
+
     setTables([...tables, newTable]);
     setTableCount(tableCount + 1);
   };
 
   const handleAddOrder = (tableNumber, newOrder) => {
+    if (!newOrder || !newOrder.name || !newOrder.price) return;
     setTables(tables.map(table => {
       if (table.number === tableNumber) {
         return {
@@ -68,6 +69,7 @@ const Tables = () => {
       return table;
     }));
   };
+
 
   return (
     <div className="container mx-auto py-8 px-4">
@@ -83,7 +85,7 @@ const Tables = () => {
           <span>Yeni Masa Ekle</span>
         </Button>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {tables.map(table => (
           <TableCard
