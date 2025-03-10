@@ -6,6 +6,8 @@ const TableCard = ({ tableNumber, orders = [], onAddOrder, menuItems = [] }) => 
   const [showEditModal, setShowEditModal] = useState(false);
   const [newProduct, setNewProduct] = useState({ menuItemId: '', quantity: 1 });
   const [editingOrder, setEditingOrder] = useState(null);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('cash');
   const totalPrice = (orders || [])
     .filter(order => order && order.name && order.price)
     .reduce((sum, order) => sum + (order.quantity ? order.price * order.quantity : 0), 0);
@@ -50,14 +52,28 @@ const TableCard = ({ tableNumber, orders = [], onAddOrder, menuItems = [] }) => 
       }
     }
   };
-
+  const handlePayment = (e) => {
+    e.preventDefault();
+    onAddOrder(tableNumber, null, []);
+    setShowPaymentModal(false);
+  };
   return (
     <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 relative transition-all duration-200 hover:shadow-lg">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-bold text-gray-700 dark:text-gray-200">Masa {tableNumber}</h3>
-        <Button onClick={() => setShowModal(true)} className="text-sm px-3 py-1">
-          + Ürün Ekle
-        </Button>
+        <div className="flex space-x-2">
+          <Button onClick={() => setShowModal(true)} className="text-sm px-3 py-1">
+            + Ürün Ekle
+          </Button>
+          {orders.length > 0 && (
+            <Button
+              onClick={() => setShowPaymentModal(true)}
+              className="text-sm px-3 py-1 bg-green-500 hover:bg-green-600"
+            >
+              Ödeme
+            </Button>
+          )}
+        </div>
       </div>
 
       {orders.length > 0 ? (
@@ -179,6 +195,52 @@ const TableCard = ({ tableNumber, orders = [], onAddOrder, menuItems = [] }) => 
                 </Button>
                 <Button type="submit">
                   Kaydet
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+      {showPaymentModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-96 shadow-xl">
+            <h4 className="text-lg font-bold text-gray-700 dark:text-gray-200 mb-4">Ödeme - Masa {tableNumber}</h4>
+            <form onSubmit={handlePayment} className="space-y-4">
+              <div className="mb-4">
+                <p className="text-lg font-medium text-gray-600 dark:text-gray-400 mb-2">Toplam Tutar:</p>
+                <p className="text-2xl font-bold text-orange-500">{totalPrice} TL</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Ödeme Yöntemi</label>
+                <div className="grid grid-cols-2 gap-4">
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('cash')}
+                    className={`p-4 border rounded-lg flex flex-col items-center justify-center transition-all ${paymentMethod === 'cash' ? 'border-orange-500 bg-orange-50 dark:bg-gray-700' : 'border-gray-300 dark:border-gray-600'}`}
+                  >
+                    <span className="text-2xl mb-2">💵</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Nakit</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('card')}
+                    className={`p-4 border rounded-lg flex flex-col items-center justify-center transition-all ${paymentMethod === 'card' ? 'border-orange-500 bg-orange-50 dark:bg-gray-700' : 'border-gray-300 dark:border-gray-600'}`}
+                  >
+                    <span className="text-2xl mb-2">💳</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Kart</span>
+                  </button>
+                </div>
+              </div>
+              <div className="flex justify-end space-x-3 mt-6">
+                <Button
+                  type="button"
+                  onClick={() => setShowPaymentModal(false)}
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200"
+                >
+                  İptal
+                </Button>
+                <Button type="submit" className="bg-green-500 hover:bg-green-600">
+                  Ödemeyi Tamamla
                 </Button>
               </div>
             </form>
