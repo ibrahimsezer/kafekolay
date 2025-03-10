@@ -18,18 +18,18 @@ const TableCard = ({ tableNumber, orders = [], onAddOrder, menuItems = [] }) => 
   const handleUpdateOrder = (e) => {
     e.preventDefault();
     if (editingOrder && editingOrder.name && editingOrder.price) {
-      let updatedOrders = [...orders];
-      if (editingOrder.quantity > 0) {
-        updatedOrders[editingOrder.index] = {
-          name: editingOrder.name,
-          price: editingOrder.price,
-          quantity: parseInt(editingOrder.quantity)
-        };
-      } else {
-        updatedOrders = updatedOrders.filter((_, index) => index !== editingOrder.index);
-      }
-      const validOrders = updatedOrders.filter(order => order && order.name && order.price && order.quantity > 0);
-      onAddOrder(tableNumber, null, validOrders);
+      const updatedOrders = orders.map((order, index) => {
+        if (index === editingOrder.index) {
+          return editingOrder.quantity > 0 ? {
+            name: editingOrder.name,
+            price: editingOrder.price,
+            quantity: parseInt(editingOrder.quantity)
+          } : null;
+        }
+        return order;
+      }).filter(order => order !== null);
+
+      onAddOrder(tableNumber, null, updatedOrders);
       setEditingOrder(null);
       setShowEditModal(false);
     }

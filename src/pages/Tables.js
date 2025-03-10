@@ -57,17 +57,28 @@ const Tables = () => {
     setTableCount(tableCount + 1);
   };
 
-  const handleAddOrder = (tableNumber, newOrder) => {
-    if (!newOrder || !newOrder.name || !newOrder.price) return;
-    setTables(tables.map(table => {
-      if (table.number === tableNumber) {
-        return {
-          ...table,
-          orders: [...table.orders, newOrder]
-        };
-      }
-      return table;
-    }));
+  const handleAddOrder = (tableNumber, newOrder, updatedOrders) => {
+    if (updatedOrders) {
+      setTables(tables.map(table => {
+        if (table.number === tableNumber) {
+          return {
+            ...table,
+            orders: updatedOrders
+          };
+        }
+        return table;
+      }));
+    } else if (newOrder && newOrder.name && newOrder.price) {
+      setTables(tables.map(table => {
+        if (table.number === tableNumber) {
+          return {
+            ...table,
+            orders: [...table.orders, newOrder]
+          };
+        }
+        return table;
+      }));
+    }
   };
 
 
