@@ -70,7 +70,7 @@ const Dashboard = () => {
       animate={{ opacity: 1 }}
       className="container mx-auto py-8 px-4"
     >
-      <h1 className="text-2xl font-bold text-gray-700 mb-6 animate-fade-in">Menü Yönetimi</h1>
+      <h1 className="text-2xl font-bold text-white mb-6 animate-fade-in">Menü Yönetimi</h1>
 
       <motion.div
         initial={{ y: 20, opacity: 0 }}

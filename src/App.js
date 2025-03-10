@@ -3,10 +3,11 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { useState, useEffect } from 'react';
 import { auth } from './firebase';
 import Navbar from './components/Navbar';
-import Dashboard from './pages/dashboard';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Tables from './pages/Tables';
+import Dashboard from './pages/Dashboard';
+import Login from './pages/login';
+import Register from './pages/register';
+import Tables from './pages/tables';
+
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -41,53 +42,53 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-gray-100">
-        <Navbar />
-        <main className="container mx-auto px-4 py-8">
-          <Routes>
-            <Route
-              path="/"
-              element={
-                isAuthenticated ? (
-                  <Navigate to="/dashboard" replace />
-                ) : (
-                  <Navigate to="/login" replace />
-                )
-              }
-            />
-            <Route
-              path="/dashboard"
-              element={
-                isAuthenticated ? (
-                  <Dashboard />
-                ) : (
-                  <Navigate to="/login" replace />
-                )
-              }
-            />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route
-              path="/tables"
-              element={
-                isAuthenticated ? (
-                  <Tables />
-                ) : (
-                  <Navigate to="/login" replace />
-                )
-              }
-            />
-            <Route
-              path='/quit'
-              element={
-                <div onClick={handleLogout}>
-                  <Navigate to="/login" replace />
-                </div>
-              }
-            />
-          </Routes>
-        </main>
-      </div>
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
+      <Navbar />
+      <main className="container mx-auto px-4 py-8">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              isAuthenticated ? (
+                <Navigate to="/dashboard" replace />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              isAuthenticated ? (
+                <Dashboard />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/tables"
+            element={
+              isAuthenticated ? (
+                <Tables />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          <Route
+            path='/quit'
+            element={
+              <div onClick={handleLogout}>
+                <Navigate to="/login" replace />
+              </div>
+            }
+          />
+        </Routes>
+      </main>
+    </div>
     </Router>
   );
 }
