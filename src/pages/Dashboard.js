@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Button from '../components/Button';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from '../contexts/ThemeContext';
 
 const Dashboard = () => {
+  const { isDark } = useTheme();
   const [menuItems, setMenuItems] = useState([
     { id: 1, name: 'Cheeseburger', price: 150, category: 'Burgerler', image: 'https://assets.tmecosys.com/image/upload/t_web600x528/img/recipe/ras/Assets/102cf51c-9220-4278-8b63-2b9611ad275e/Derivates/3831dbe2-352e-4409-a2e2-fc87d11cab0a.jpg', description: 'Özel peynirli burger', stock: 50},
     { id: 2, name: 'Pizza', price: 180, category: 'Pizza', image: 'https://assets.tmecosys.com/image/upload/t_web600x528/img/recipe/ras/Assets/ecaeb2cc-a950-4645-a648-9137305b3287/Derivates/df977b90-193d-49d4-a59d-8dd922bcbf65.jpg', description: 'Klasik Margherita pizza', stock: 30},
@@ -70,24 +72,24 @@ const Dashboard = () => {
       animate={{ opacity: 1 }}
       className="container mx-auto py-8 px-4"
     >
-      <h1 className="text-2xl font-bold text-white mb-6 animate-fade-in">Menü Yönetimi</h1>
+      <h1 className={`text-2xl font-bold mb-6 animate-fade-in ${isDark ? 'text-white' : 'text-gray-800'}`}>Menü Yönetimi</h1>
 
       <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="bg-white shadow-md rounded-md p-6 mb-8 hover:shadow-lg transition-shadow duration-300"
+        className={`shadow-md rounded-md p-6 mb-8 hover:shadow-lg transition-shadow duration-300 ${isDark ? 'bg-gray-800' : 'bg-white'}`}
       >
-        <h2 className="text-xl font-medium text-gray-700 mb-4">
+        <h2 className={`text-xl font-medium mb-4 ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
           {editingItem ? 'Ürün Düzenle' : 'Yeni Ürün Ekle'}
         </h2>
 
         <form onSubmit={handleAddItem} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div className="relative group">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="relative group col-span-full md:col-span-1">
               <label 
                 htmlFor="itemName" 
-                className="block text-sm font-medium text-gray-700 mb-1 group-hover:text-orange-500 transition-colors duration-300"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 group-hover:text-orange-500 transition-colors duration-300"
               >
                 Ürün Adı
               </label>
@@ -98,24 +100,21 @@ const Dashboard = () => {
                   value={newItem.name}
                   onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
                   required
-                  className="w-full pl-10 pr-3 py-2 border-2 border-gray-300 rounded-md 
+                  className="w-full pl-10 pr-3 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg
                     focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500
                     transition-all duration-300 hover:border-orange-300
-                    placeholder-gray-400 shadow-sm"
+                    bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
+                    placeholder-gray-400 dark:placeholder-gray-500 shadow-sm"
                   placeholder="Ürün adı giriniz..."
                 />
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-orange-500 transition-colors duration-300">
                   🍽️
                 </span>
-                <div className="absolute inset-0 w-full h-full rounded-md bg-orange-100 opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none"></div>
               </div>
-              <p className="mt-1 text-xs text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                Menüde görünecek ürün adını giriniz
-              </p>
             </div>
 
-            <div>
-              <label htmlFor="itemPrice" className="block text-sm font-medium text-gray-700 mb-1">
+            <div className="relative group">
+              <label htmlFor="itemPrice" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 group-hover:text-orange-500 transition-colors duration-300">
                 Fiyat (TL)
               </label>
               <div className="relative">
@@ -127,102 +126,112 @@ const Dashboard = () => {
                   required
                   min="0"
                   step="0.01"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-300 hover:border-orange-300"
+                  className="w-full pl-10 pr-3 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg
+                    focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500
+                    transition-all duration-300 hover:border-orange-300
+                    bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                   placeholder="0.00"
                 />
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-orange-500 transition-colors duration-300">
+                  💰
+                </span>
               </div>
             </div>
 
-<div className="w-full">
-  <label htmlFor="itemCategory" className="block text-sm font-medium text-gray-700 mb-3">
-    Kategori
-  </label>
-  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-    {categories.map(category => (
-      <div
-        key={category}
-        onClick={() => setNewItem({ ...newItem, category })}
-        className={`
-          cursor-pointer rounded-lg p-4 transition-all duration-300
-          ${newItem.category === category 
-            ? 'bg-orange-500 text-white shadow-lg transform -translate-y-1' 
-            : 'bg-white border-2 border-gray-200 hover:border-orange-300 hover:shadow-md'
-          }
-        `}
-      >
-        <div className="flex flex-col items-center space-y-2">
-          {/* Category Icons - You can replace these with actual icons */}
-          <div className={`
-            text-2xl mb-2
-            ${newItem.category === category ? 'text-white' : 'text-orange-500'}
-          `}>
-            {category === 'Burgerler' && '🍔'}
-            {category === 'Pizza' && '🍕'}
-            {category === 'Salatalar' && '🥗'}
-            {category === 'İçecekler' && '🥤'}
-            {category === 'Tatlılar' && '🍰'}
-          </div>
-          <span className="text-center font-medium text-sm">{category}</span>
-        </div>
-      </div>
-    ))}
-  </div>
-  {/* Hidden select for form validation */}
-  <select
-    id="itemCategory"
-    value={newItem.category}
-    onChange={(e) => setNewItem({ ...newItem, category: e.target.value })}
-    required
-    className="sr-only"
-  >
-    <option value="">Kategori seçin</option>
-    {categories.map(category => (
-      <option key={category} value={category}>{category}</option>
-    ))}
-  </select>
-</div>
-
-            <div>
-              <label htmlFor="itemImage" className="block text-sm font-medium text-gray-700 mb-1">
-                Görsel URL
-              </label>
-              <input
-                id="itemImage"
-                type="text"
-                value={newItem.image}
-                onChange={(e) => setNewItem({ ...newItem, image: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-300 hover:border-orange-300"
-                placeholder="Görsel URL"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="itemStock" className="block text-sm font-medium text-gray-700 mb-1">
+            <div className="relative group">
+              <label htmlFor="itemStock" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 group-hover:text-orange-500 transition-colors duration-300">
                 Stok
               </label>
-              <input
-                id="itemStock"
-                type="number"
-                value={newItem.stock}
-                onChange={(e) => setNewItem({ ...newItem, stock: e.target.value })}
-                required
-                min="0"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-300 hover:border-orange-300"
-                placeholder="Stok miktarı"
-              />
+              <div className="relative">
+                <input
+                  id="itemStock"
+                  type="number"
+                  value={newItem.stock}
+                  onChange={(e) => setNewItem({ ...newItem, stock: e.target.value })}
+                  required
+                  min="0"
+                  className="w-full pl-10 pr-3 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg
+                    focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500
+                    transition-all duration-300 hover:border-orange-300
+                    bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                  placeholder="Stok miktarı"
+                />
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-orange-500 transition-colors duration-300">
+                  📦
+                </span>
+              </div>
             </div>
 
-            <div className="md:col-span-2 lg:col-span-3">
-              <label htmlFor="itemDescription" className="block text-sm font-medium text-gray-700 mb-1">
+            <div className="col-span-full">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                Kategori
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 dark:text-gray-300">
+                {categories.map(category => (
+                  <motion.div
+                    key={category}
+                    onClick={() => setNewItem({ ...newItem, category })}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`
+                      cursor-pointer rounded-xl p-4 transition-all duration-300
+                      ${newItem.category === category 
+                        ? 'bg-orange-500 dark:bg-orange-600 text-white shadow-lg transform -translate-y-1' 
+                        : 'bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 hover:border-orange-300 dark:hover:border-orange-500 hover:shadow-md'
+                      }
+                    `}
+                  >
+                    <div className="flex flex-col items-center space-y-2">
+                      <span className={`text-2xl ${newItem.category === category ? 'text-white' : 'text-orange-500'}`}>
+                        {category === 'Burgerler' && '🍔'}
+                        {category === 'Pizza' && '🍕'}
+                        {category === 'Salatalar' && '🥗'}
+                        {category === 'İçecekler' && '🥤'}
+                        {category === 'Tatlılar' && '🍰'}
+                      </span>
+                      <span className="text-center font-medium text-sm">{category}</span>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            <div className="col-span-full">
+              <label htmlFor="itemImage" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 group-hover:text-orange-500 transition-colors duration-300">
+                Görsel URL
+              </label>
+              <div className="relative">
+                <input
+                  id="itemImage"
+                  type="text"
+                  value={newItem.image}
+                  onChange={(e) => setNewItem({ ...newItem, image: e.target.value })}
+                  className="w-full pl-10 pr-3 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg
+                    focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500
+                    transition-all duration-300 hover:border-orange-300
+                    bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                  placeholder="Görsel URL girin"
+                />
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-orange-500 transition-colors duration-300">
+                  🖼️
+                </span>
+              </div>
+            </div>
+
+            <div className="col-span-full">
+              <label htmlFor="itemDescription" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 group-hover:text-orange-500 transition-colors duration-300">
                 Açıklama
               </label>
               <textarea
                 id="itemDescription"
                 value={newItem.description}
                 onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-300 hover:border-orange-300"
+                className="w-full px-3 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg
+                  focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500
+                  transition-all duration-300 hover:border-orange-300
+                  bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                 rows="3"
-                placeholder="Ürün açıklaması"
+                placeholder="Ürün açıklaması girin"
               />
             </div>
           </div>
@@ -251,10 +260,10 @@ const Dashboard = () => {
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="bg-white shadow-md rounded-md p-6"
+        className={`shadow-md rounded-md p-6 ${isDark ? 'bg-gray-800' : 'bg-white'}`}
       >
         <div className="flex flex-col md:flex-row justify-between items-center mb-6">
-          <h2 className="text-xl font-medium text-gray-700 mb-4 md:mb-0">Menü Listesi</h2>
+          <h2 className={`text-xl font-medium mb-4 md:mb-0 ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>Menü Listesi</h2>
 
           <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 w-full md:w-auto">
             <input
@@ -288,7 +297,7 @@ const Dashboard = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   whileHover={{ scale: 1.02 }}
-                  className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-all duration-300 relative overflow-hidden"
+                  className="flex items-center justify-between p-4 border rounded-lg hover:bg-orange-50 dark:hover:bg-gray-700 transition-all duration-300 relative overflow-hidden"
                 >
                   <div className="flex items-center space-x-4">
                     {item.image && (
@@ -301,15 +310,15 @@ const Dashboard = () => {
                     )}
                     <div>
                       <div className="flex items-center space-x-2">
-                        <h3 className="font-medium text-gray-800">{item.name}</h3>
+                        <h3 className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-600'}`}>{item.name}</h3>
                       </div>
-                      <p className="text-sm text-gray-500">{item.category}</p>
-                      <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                      <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{item.category}</p>
+                      <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{item.description}</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
                     <div className="text-right">
-                      <p className="font-medium text-gray-800">{item.price} TL</p>
+                      <p className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-600'}`}>{item.price} TL</p>
                       <p className={`text-sm ${getStockStatus(item.stock)}`}>
                         Stok: {item.stock}
                       </p>
