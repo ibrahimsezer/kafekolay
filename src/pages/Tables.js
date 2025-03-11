@@ -83,21 +83,21 @@ const Tables = () => {
 
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      <div className="flex justify-between items-center mb-6">
+    <div className="container mx-auto py-4 sm:py-6 md:py-8 px-3 sm:px-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-3 sm:gap-0">
         <div>
-          <h1 className="text-2xl font-bold text-gray-700 dark:text-gray-200">Masa Takibi</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-700 dark:text-gray-200">Masa Takibi</h1>
+          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
             Toplam {tables.length} masa | {tables.reduce((acc, table) => acc + table.orders.length, 0)} aktif sipariş
           </p>
         </div>
-        <Button onClick={handleAddTable} className="flex items-center space-x-2">
+        <Button onClick={handleAddTable} className="flex items-center space-x-2 text-sm sm:text-base">
           <span>+</span>
           <span>Yeni Masa Ekle</span>
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
         {tables.map(table => (
           <TableCard
             key={table.id}

@@ -124,19 +124,19 @@ const Analytics = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="container mx-auto py-8 px-4"
+      className="container mx-auto py-4 sm:py-6 md:py-8 px-3 sm:px-4"
     >
       {/* Date Range Filter */}
-      <div className="flex justify-between items-center mb-8">
-        <h1 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-3 sm:gap-0">
+        <h1 className={`text-xl sm:text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
           Analiz Tabloları
         </h1>
-        <div className="flex space-x-2">
+        <div className="flex flex-wrap gap-2">
           {dateRanges.map(({ value, label }) => (
             <button
               key={value}
               onClick={() => handleDateRangeChange(value)}
-              className={`px-4 py-2 rounded-lg transition-all duration-200 ${dateRange === value
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 text-sm rounded-lg transition-all duration-200 ${dateRange === value
                 ? (isDark ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-900')
                 : (isDark ? 'text-gray-400 hover:bg-gray-700' : 'text-gray-600 hover:bg-gray-100')}`}
             >
@@ -146,18 +146,18 @@ const Analytics = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
         {/* Siparişler Card */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.3 }}
-          className={`${isDark ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105`}
+          className={`${isDark ? 'bg-gray-800' : 'bg-white'} p-4 sm:p-6 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105`}
         >
           <div className="flex justify-between items-start">
             <div>
-              <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Siparişler</p>
-              <h3 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              <p className={`text-xs sm:text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Siparişler</p>
+              <h3 className={`text-xl sm:text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                 <motion.span
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -167,7 +167,7 @@ const Analytics = () => {
                 </motion.span>
               </h3>
               <div className="flex items-center space-x-1">
-                <span className="text-green-500 text-sm">+2.5%</span>
+                <span className="text-green-500 text-xs sm:text-sm">+2.5%</span>
                 <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>geçen döneme kıyasla</span>
               </div>
             </div>
@@ -180,7 +180,7 @@ const Analytics = () => {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.1 }}
-          className={`${isDark ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105`}
+          className={`${isDark ? 'bg-gray-800' : 'bg-white'} p-4 sm:p-6 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105`}
         >
           <div className="flex justify-between items-start">
             <div>
@@ -208,7 +208,7 @@ const Analytics = () => {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.2 }}
-          className={`${isDark ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105`}
+          className={`${isDark ? 'bg-gray-800' : 'bg-white'} p-4 sm:p-6 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105`}
         >
           <div className="flex justify-between items-start">
             <div>

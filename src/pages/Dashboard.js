@@ -371,10 +371,10 @@ const Dashboard = () => {
         transition={{ duration: 0.5, delay: 0.2 }}
         className={`shadow-md rounded-md p-6 ${isDark ? 'bg-gray-800' : 'bg-white'}`}
       >
-        <div className="flex flex-col md:flex-row justify-between items-center mb-6">
-          <h2 className={`text-xl font-medium mb-4 md:mb-0 ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>Menü Listesi</h2>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6">
+          <h2 className={`text-lg sm:text-xl font-medium mb-3 sm:mb-0 ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>Menü Listesi</h2>
 
-          <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 w-full md:w-auto">
+          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
             <input
               type="text"
               placeholder="Ürün ara..."
@@ -405,43 +405,43 @@ const Dashboard = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
-                  whileHover={{ scale: 1.02 }}
-                  className="flex items-center justify-between p-4 border rounded-lg hover:bg-orange-50 dark:hover:bg-gray-700 transition-all duration-300 relative overflow-hidden"
+                  whileHover={{ scale: 1.01 }}
+                  className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 sm:p-4 border rounded-lg hover:bg-orange-50 dark:hover:bg-gray-700 transition-all duration-300 relative overflow-hidden gap-3"
                 >
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-3 w-full sm:w-auto">
                     {item.image && (
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="w-16 h-16 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-110"
+                        className="w-14 h-14 sm:w-16 sm:h-16 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-110"
                         onError={(e) => e.target.src = 'placeholder.jpg'}
                       />
                     )}
                     <div>
                       <div className="flex items-center space-x-2">
-                        <h3 className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-600'}`}>{item.name}</h3>
+                        <h3 className={`font-medium text-sm sm:text-base ${isDark ? 'text-gray-200' : 'text-gray-600'}`}>{item.name}</h3>
                       </div>
-                      <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{item.category}</p>
-                      <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{item.description}</p>
+                      <p className={`text-xs sm:text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{item.category}</p>
+                      <p className={`text-xs sm:text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{item.description}</p>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-4">
-                    <div className="text-right">
-                      <p className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-600'}`}>{item.price} TL</p>
-                      <p className={`text-sm ${getStockStatus(item.stock)}`}>
+                  <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto space-x-3 sm:space-x-4">
+                    <div className="text-left sm:text-right">
+                      <p className={`font-medium text-sm sm:text-base ${isDark ? 'text-gray-200' : 'text-gray-600'}`}>{item.price} TL</p>
+                      <p className={`text-xs sm:text-sm ${getStockStatus(item.stock)}`}>
                         Stok: {item.stock}
                       </p>
                     </div>
                     <div className="flex space-x-2">
                       <button
                         onClick={() => handleEditItem(item)}
-                        className="p-2 text-blue-600 hover:bg-blue-50 rounded transition-colors duration-300"
+                        className="p-1 sm:p-2 text-xs sm:text-sm text-blue-600 hover:bg-blue-50 rounded transition-colors duration-300"
                       >
                         Düzenle
                       </button>
                       <button
                         onClick={() => handleDeleteItem(item.id)}
-                        className="p-2 text-red-600 hover:bg-red-50 rounded transition-colors duration-300"
+                        className="p-1 sm:p-2 text-xs sm:text-sm text-red-600 hover:bg-red-50 rounded transition-colors duration-300"
                       >
                         Sil
                       </button>

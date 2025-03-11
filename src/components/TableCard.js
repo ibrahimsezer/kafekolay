@@ -58,17 +58,17 @@ const TableCard = ({ tableNumber, orders = [], onAddOrder, menuItems = [] }) => 
     setShowPaymentModal(false);
   };
   return (
-    <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 relative transition-all duration-200 hover:shadow-lg">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-bold text-gray-700 dark:text-gray-200">Masa {tableNumber}</h3>
-        <div className="flex space-x-2">
-          <Button onClick={() => setShowModal(true)} className="text-sm px-3 py-1">
+    <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-3 sm:p-4 relative transition-all duration-200 hover:shadow-lg">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 sm:mb-4 gap-2 sm:gap-0">
+        <h3 className="text-base sm:text-lg font-bold text-gray-700 dark:text-gray-200">Masa {tableNumber}</h3>
+        <div className="flex flex-wrap gap-2 w-full sm:w-auto">
+          <Button onClick={() => setShowModal(true)} className="text-xs sm:text-sm px-2 sm:px-3 py-1 flex-grow sm:flex-grow-0">
             + Ürün Ekle
           </Button>
           {orders.length > 0 && (
             <Button
               onClick={() => setShowPaymentModal(true)}
-              className="text-sm px-3 py-1 bg-green-500 hover:bg-green-600"
+              className="text-xs sm:text-sm px-2 sm:px-3 py-1 bg-green-500 hover:bg-green-600 flex-grow sm:flex-grow-0"
             >
               Ödeme
             </Button>
