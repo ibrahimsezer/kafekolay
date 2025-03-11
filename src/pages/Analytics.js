@@ -31,10 +31,10 @@ const Analytics = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const dateRanges = [
-    { value: 'week', label: 'This Week' },
-    { value: 'month', label: 'This Month' },
-    { value: 'quarter', label: 'This Quarter' },
-    { value: 'year', label: 'This Year' }
+    { value: 'week', label: 'Bu Hafta' },
+    { value: 'month', label: 'Bu Ay' },
+    { value: 'quarter', label: 'Bu Mevsim' },
+    { value: 'year', label: 'Bu Yıl' }
   ];
 
   // Sample data for the line chart
@@ -129,7 +129,7 @@ const Analytics = () => {
       {/* Date Range Filter */}
       <div className="flex justify-between items-center mb-8">
         <h1 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-          Analytics Dashboard
+          Analiz Tabloları
         </h1>
         <div className="flex space-x-2">
           {dateRanges.map(({ value, label }) => (
@@ -168,7 +168,7 @@ const Analytics = () => {
               </h3>
               <div className="flex items-center space-x-1">
                 <span className="text-green-500 text-sm">+2.5%</span>
-                <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>vs last period</span>
+                <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>geçen döneme kıyasla</span>
               </div>
             </div>
             <div className="text-green-500 text-2xl transform transition-transform hover:scale-110 cursor-help">📈</div>
@@ -196,7 +196,7 @@ const Analytics = () => {
               </h3>
               <div className="flex items-center space-x-1">
                 <span className="text-red-500 text-sm">-4.5%</span>
-                <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>vs last period</span>
+                <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>geçen döneme kıyasla</span>
               </div>
             </div>
             <div className="text-red-500 text-2xl transform transition-transform hover:scale-110 cursor-help">📉</div>
@@ -224,7 +224,7 @@ const Analytics = () => {
               </h3>
               <div className="flex items-center space-x-1">
                 <span className="text-green-500 text-sm">+6.5%</span>
-                <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>vs last period</span>
+                <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>geçen döneme kıyasla</span>
               </div>
             </div>
             <div className="text-green-500 text-2xl transform transition-transform hover:scale-110 cursor-help">📊</div>

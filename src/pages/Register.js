@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import Button from '../components/Button';
 import logo from '../logo16_9.png';
+import bgImage from '../main_bg_logo.jpeg';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -46,8 +47,8 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
+    <div className="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${bgImage})`, position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
+      <div className="max-w-md w-full bg-white bg-opacity-90 rounded-lg shadow-md p-8 relative z-10">
         <img src={logo} alt="KafeKolay Logo" className="w-160 h-90" />
         <h2 className="text-center text-2xl font-bold text-gray-800 mb-6">
           Kayıt Ol

@@ -62,7 +62,7 @@ const Navbar = () => {
                   isActive ? "text-orange-500 font-medium" : "text-gray-600 dark:text-gray-300 hover:text-orange-500 transition-colors duration-200"
                 }
               >
-                Dashboard
+                Anasayfa
               </NavLink>
               <NavLink
                 to="/tables"
@@ -70,7 +70,7 @@ const Navbar = () => {
                   isActive ? "text-orange-500 font-medium" : "text-gray-600 dark:text-gray-300 hover:text-orange-500 transition-colors duration-200"
                 }
               >
-                Tables
+                Masalar
               </NavLink>
               <NavLink
                 to="/analytics"
@@ -78,13 +78,13 @@ const Navbar = () => {
                   isActive ? "text-orange-500 font-medium" : "text-gray-600 dark:text-gray-300 hover:text-orange-500 transition-colors duration-200"
                 }
               >
-                Analytics
+                Analiz
               </NavLink>
               <button
                 onClick={handleLogout}
                 className="text-gray-600 dark:text-gray-300 hover:text-orange-500 transition-colors duration-200"
               >
-                Quit
+                Çıkış
               </button>
             </>
           )}
