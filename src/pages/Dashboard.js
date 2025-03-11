@@ -1,14 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Button from '../components/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
 
 const Dashboard = () => {
   const { isDark } = useTheme();
+  const fileInputRef = useRef(null);
+  const [showDefaultImages, setShowDefaultImages] = useState(false);
+  const [imagePreview, setImagePreview] = useState('');
+
+  const defaultImages = [
+    { url: 'https://assets.tmecosys.com/image/upload/t_web600x528/img/recipe/ras/Assets/102cf51c-9220-4278-8b63-2b9611ad275e/Derivates/3831dbe2-352e-4409-a2e2-fc87d11cab0a.jpg', label: 'Burger' },
+    { url: 'https://assets.tmecosys.com/image/upload/t_web600x528/img/recipe/ras/Assets/ecaeb2cc-a950-4645-a648-9137305b3287/Derivates/df977b90-193d-49d4-a59d-8dd922bcbf65.jpg', label: 'Pizza' },
+    { url: 'https://cdn.loveandlemons.com/wp-content/uploads/2021/04/green-salad-1-580x803.jpg', label: 'Salad' },
+    { url: 'https://images.unsplash.com/photo-1551024601-bec78aea704b', label: 'Dessert' },
+    { url: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd', label: 'Coffee' },
+    { url: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97', label: 'Drink' }
+  ];
+
   const [menuItems, setMenuItems] = useState([
-    { id: 1, name: 'Cheeseburger', price: 150, category: 'Burgerler', image: 'https://assets.tmecosys.com/image/upload/t_web600x528/img/recipe/ras/Assets/102cf51c-9220-4278-8b63-2b9611ad275e/Derivates/3831dbe2-352e-4409-a2e2-fc87d11cab0a.jpg', description: 'Özel peynirli burger', stock: 50},
-    { id: 2, name: 'Pizza', price: 180, category: 'Pizza', image: 'https://assets.tmecosys.com/image/upload/t_web600x528/img/recipe/ras/Assets/ecaeb2cc-a950-4645-a648-9137305b3287/Derivates/df977b90-193d-49d4-a59d-8dd922bcbf65.jpg', description: 'Klasik Margherita pizza', stock: 30},
-    { id: 3, name: 'Salata', price: 80, category: 'Salatalar', image: 'https://cdn.loveandlemons.com/wp-content/uploads/2021/04/green-salad-1-580x803.jpg', description: 'Taze bahçe salatası', stock: 25 },
+    { id: 1, name: 'Cheeseburger', price: 150, category: 'Burgerler', image: defaultImages[0].url, description: 'Özel peynirli burger', stock: 50},
+    { id: 2, name: 'Pizza', price: 180, category: 'Pizza', image: defaultImages[1].url, description: 'Klasik Margherita pizza', stock: 30},
+    { id: 3, name: 'Salata', price: 80, category: 'Salatalar', image: defaultImages[2].url, description: 'Taze bahçe salatası', stock: 25 },
   ]);
 
   const [newItem, setNewItem] = useState({ name: '', price: '', category: '', image: '', description: '', stock: ''});
@@ -17,6 +30,34 @@ const Dashboard = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   const categories = ['Burgerler', 'Pizza', 'Salatalar', 'İçecekler', 'Tatlılar'];
+
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) { // 5MB limit
+        alert('Dosya boyutu 5MB\'dan küçük olmalıdır.');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setNewItem({ ...newItem, image: reader.result });
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleImageUrlChange = (e) => {
+    const url = e.target.value;
+    setNewItem({ ...newItem, image: url });
+    setImagePreview(url);
+  };
+
+  const handleDefaultImageSelect = (url) => {
+    setNewItem({ ...newItem, image: url });
+    setImagePreview(url);
+    setShowDefaultImages(false);
+  };
 
   const handleAddItem = (e) => {
     e.preventDefault();
@@ -33,6 +74,7 @@ const Dashboard = () => {
       }
 
       setNewItem({ name: '', price: '', category: '', image: '', description: '', stock: '' });
+      setImagePreview('');
     }
   };
 
@@ -45,6 +87,7 @@ const Dashboard = () => {
       description: item.description,
       stock: item.stock
     });
+    setImagePreview(item.image);
     setEditingItem(item);
   };
 
@@ -53,6 +96,7 @@ const Dashboard = () => {
     if (editingItem && editingItem.id === id) {
       setEditingItem(null);
       setNewItem({ name: '', price: '', category: '', image: '', description: '', stock: '' });
+      setImagePreview('');
     }
   };
 
@@ -86,11 +130,9 @@ const Dashboard = () => {
 
         <form onSubmit={handleAddItem} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="relative group col-span-full md:col-span-1">
-              <label 
-                htmlFor="itemName" 
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 group-hover:text-orange-500 transition-colors duration-300"
-              >
+            {/* Rest of the form fields */}
+            <div className="relative group">
+              <label htmlFor="itemName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 group-hover:text-orange-500 transition-colors duration-300">
                 Ürün Adı
               </label>
               <div className="relative">
@@ -161,7 +203,97 @@ const Dashboard = () => {
                 </span>
               </div>
             </div>
+ {/* Image Input Section */}
+ <div className="col-span-full md:col-span-1">
+              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                Ürün Görseli
+              </label>
+              <div className="space-y-4">
+                {/* Image Preview */}
+                {imagePreview && (
+                  <div className="relative w-full h-48 rounded-lg overflow-hidden">
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.src = 'https://via.placeholder.com/400x300?text=Görsel+Yüklenemedi';
+                      }}
+                    />
+                  </div>
+                )}
 
+                {/* URL Input */}
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Görsel URL'si girin"
+                    value={newItem.image}
+                    onChange={handleImageUrlChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  />
+                </div>
+
+                {/* File Upload Button */}
+                <div className="flex space-x-2">
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleImageChange}
+                    accept="image/*"
+                    className="hidden"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:bg-gray-600"
+                  >
+                    Dosyadan Seç
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowDefaultImages(prev => !prev)}
+                    className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:bg-gray-600"
+                  >
+                    Hazır Görseller
+                  </button>
+                </div>
+
+                {/* Default Images Grid */}
+                <AnimatePresence>
+                  {showDefaultImages && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="grid grid-cols-3 gap-2 mt-2"
+                    >
+                      {defaultImages.map((img, index) => (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: index * 0.1 }}
+                          className="relative cursor-pointer group"
+                          onClick={() => handleDefaultImageSelect(img.url)}
+                        >
+                          <div className="aspect-w-1 aspect-h-1">
+                            <img
+                              src={img.url}
+                              alt={img.label}
+                              className="w-full h-full object-cover rounded-md group-hover:opacity-75 transition-opacity duration-200"
+                            />
+                          </div>
+                          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black bg-opacity-50 rounded-md">
+                            <span className="text-white text-sm font-medium">{img.label}</span>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </div>
             <div className="col-span-full">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                 Kategori
@@ -195,29 +327,6 @@ const Dashboard = () => {
                 ))}
               </div>
             </div>
-
-            <div className="col-span-full">
-              <label htmlFor="itemImage" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 group-hover:text-orange-500 transition-colors duration-300">
-                Görsel URL
-              </label>
-              <div className="relative">
-                <input
-                  id="itemImage"
-                  type="text"
-                  value={newItem.image}
-                  onChange={(e) => setNewItem({ ...newItem, image: e.target.value })}
-                  className="w-full pl-10 pr-3 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg
-                    focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500
-                    transition-all duration-300 hover:border-orange-300
-                    bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                  placeholder="Görsel URL girin"
-                />
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-orange-500 transition-colors duration-300">
-                  🖼️
-                </span>
-              </div>
-            </div>
-
             <div className="col-span-full">
               <label htmlFor="itemDescription" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 group-hover:text-orange-500 transition-colors duration-300">
                 Açıklama
