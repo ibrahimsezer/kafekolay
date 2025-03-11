@@ -261,42 +261,127 @@ const Analytics = () => {
           className={`${isDark ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-lg transform transition-all duration-200 hover:shadow-xl`}
         >
           <h3 className={`text-lg font-semibold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>Müşteriler</h3>
-          <div className="flex items-center justify-between">
-            <div>
-              <p className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="p-4 rounded-lg bg-opacity-10 bg-green-500">
+              <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Aktif Müşteriler</p>
+              <h4 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                 <motion.span
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  key={isLoading ? 'loading' : '98,425'}
+                  key={isLoading ? 'loading' : '75,320'}
                 >
-                  {isLoading ? '...' : '98,425'}
+                  {isLoading ? '...' : '75,320'}
                 </motion.span>
-              </p>
-              <div className="flex items-center mt-2">
-                <span className="text-green-500 text-sm">+24%</span>
-                <span className={`ml-2 text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>vs last period</span>
+              </h4>
+              <div className="flex items-center mt-1">
+                <span className="text-green-500 text-sm">+12%</span>
+                <span className={`ml-2 text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>vs last month</span>
               </div>
             </div>
-            <div className="w-32 h-32 relative group">
-              <svg className="w-full h-full transform transition-transform group-hover:scale-105" viewBox="0 0 36 36">
-                <path
-                  d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"
-                  fill="none"
-                  stroke={isDark ? '#374151' : '#E5E7EB'}
-                  strokeWidth="3"
-                />
-                <path
-                  d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"
-                  fill="none"
-                  stroke="#10B981"
-                  strokeWidth="3"
-                  strokeDasharray="100"
-                />
-              </svg>
+            <div className="p-4 rounded-lg bg-opacity-10 bg-blue-500">
+              <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Müşteri Tutma Oranı</p>
+              <h4 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  key={isLoading ? 'loading' : '85%'}
+                >
+                  {isLoading ? '...' : '85%'}
+                </motion.span>
+              </h4>
+              <div className="flex items-center mt-1">
+                <span className="text-blue-500 text-sm">+5%</span>
+                <span className={`ml-2 text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>vs last month</span>
+              </div>
+            </div>
+          </div>
+          <div className="space-y-4">
+            <div>
+              <div className="flex justify-between mb-2">
+                <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Premium Müşteriler</span>
+                <span className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>35%</span>
+              </div>
+              <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+                <div className="h-2 bg-purple-500 rounded-full" style={{ width: '35%' }}></div>
+              </div>
+            </div>
+            <div>
+              <div className="flex justify-between mb-2">
+                <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Düzenli Müşteriler</span>
+                <span className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>45%</span>
+              </div>
+              <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+                <div className="h-2 bg-blue-500 rounded-full" style={{ width: '45%' }}></div>
+              </div>
+            </div>
+            <div>
+              <div className="flex justify-between mb-2">
+                <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Yeni Müşteriler</span>
+                <span className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>20%</span>
+              </div>
+              <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+                <div className="h-2 bg-green-500 rounded-full" style={{ width: '20%' }}></div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Aylık Kazanç Card */}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.4 }}
+          className={`${isDark ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-lg transform transition-all duration-200 hover:shadow-xl`}
+        >
+          <div className="flex justify-between items-center mb-6">
+            <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Aylık Kazanç</h3>
+            <div className="flex items-center space-x-2">
+              <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Total:</span>
+              <span className={`text-xl font-bold text-green-500`}>42,800 TL</span>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="p-4 rounded-lg bg-opacity-10 bg-orange-500">
+              <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>En Yoğun Saat</p>
+              <h4 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>12:00-14:00</h4>
+              <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Daily Peak</p>
+            </div>
+            <div className="p-4 rounded-lg bg-opacity-10 bg-purple-500">
+              <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Ortalama Sipariş</p>
+              <h4 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>185 TL</h4>
+              <div className="flex items-center mt-1">
+                <span className="text-green-500 text-sm">+8%</span>
+                <span className={`ml-2 text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>vs last month</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="h-[300px] relative">
+            {isLoading ? (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
+              </div>
+            ) : (
+              <Line data={monthlyData} options={chartOptions} />
+            )}
+          </div>
+
+          <div className="mt-6">
+            <h4 className={`text-sm font-medium mb-3 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>En Çok Satan Ürünler</h4>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Pizza</span>
+                <span className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>2,450 TL</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Burger</span>
+                <span className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>1,850 TL</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Cola</span>
+                <span className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>1,250 TL</span>
+              </div>
             </div>
           </div>
         </motion.div>
