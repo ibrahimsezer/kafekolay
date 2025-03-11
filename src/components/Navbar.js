@@ -71,6 +71,14 @@ const Navbar = () => {
               >
                 Tables
               </NavLink>
+              <NavLink 
+                to="/analytics" 
+                className={({ isActive }) => 
+                  isActive ? "text-orange-500 font-medium" : "text-gray-600 dark:text-gray-300 hover:text-orange-500 transition-colors duration-200"
+                }
+              >
+                Analytics
+              </NavLink>
               <button 
                 onClick={handleLogout}
                 className="text-gray-600 dark:text-gray-300 hover:text-orange-500 transition-colors duration-200"

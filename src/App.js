@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/login';
 import Register from './pages/register';
 import Tables from './pages/tables';
+import Analytics from './pages/Analytics';
 
 
 function App() {
@@ -73,6 +74,16 @@ function App() {
             element={
               isAuthenticated ? (
                 <Tables />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          <Route
+            path="/analytics"
+            element={
+              isAuthenticated ? (
+                <Analytics />
               ) : (
                 <Navigate to="/login" replace />
               )
