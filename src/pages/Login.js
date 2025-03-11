@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import Button from '../components/Button';
+import logo from '../logo16_9.png';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -38,9 +39,10 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center py-12 px-4">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
+        <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
+        <img src={logo} alt="KafeKolay Logo" className="w-160 h-90" />
         <h2 className="text-center text-2xl font-bold text-gray-800 mb-6">
-          CafeSaaS'a Giriş Yap
+          Giriş Yap
         </h2>
         
         <form onSubmit={handleSubmit} className="space-y-6">

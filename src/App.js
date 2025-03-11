@@ -8,11 +8,13 @@ import Login from './pages/login';
 import Register from './pages/register';
 import Tables from './pages/tables';
 import Analytics from './pages/Analytics';
+import SplashScreen from './components/SplashScreen';
 
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -33,6 +35,10 @@ function App() {
     }
   };
 
+  if (showSplash) {
+    return <SplashScreen onComplete={() => setShowSplash(false)} />;
+  }
+  
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">

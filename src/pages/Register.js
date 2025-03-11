@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import Button from '../components/Button';
+import logo from '../logo16_9.png';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -47,10 +48,11 @@ const Register = () => {
   return (
     <div className="min-h-screen flex items-center justify-center py-12 px-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
+        <img src={logo} alt="KafeKolay Logo" className="w-160 h-90" />
         <h2 className="text-center text-2xl font-bold text-gray-800 mb-6">
-          CafeSaaS'a Kayıt Ol
+          Kayıt Ol
         </h2>
-        
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -66,7 +68,7 @@ const Register = () => {
               placeholder="ornek@email.com"
             />
           </div>
-          
+
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
               Şifre
@@ -81,7 +83,7 @@ const Register = () => {
               placeholder="••••••••"
             />
           </div>
-          
+
           <div>
             <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
               Şifre Tekrarı
@@ -96,7 +98,7 @@ const Register = () => {
               placeholder="••••••••"
             />
           </div>
-          
+
           {error && (
             <div className="text-red-500 text-sm text-center">
               {error}
@@ -108,7 +110,7 @@ const Register = () => {
             </Button>
           </div>
         </form>
-        
+
         <p className="mt-4 text-center text-sm text-gray-600">
           Zaten hesabın var mı?{' '}
           <Link to="/" className="text-orange-500 hover:text-orange-600 font-medium">

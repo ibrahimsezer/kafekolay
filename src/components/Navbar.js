@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { useTheme } from '../contexts/ThemeContext';
+import logo from '../logo16_9.png';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -21,9 +22,9 @@ const Navbar = () => {
     <nav className="bg-gray-100 dark:bg-gray-800 p-4 shadow-sm transition-colors duration-200">
       <div className="container mx-auto flex justify-between items-center">
         <NavLink to="/" className="text-xl font-bold text-gray-800 dark:text-white transition-colors duration-200">
-          CafeSaaS
+          <img src={logo} alt="KafeKolay Logo" className="w-32 h-18" />
         </NavLink>
-        
+
         <div className="flex items-center space-x-4">
           <button
             onClick={toggleTheme}
@@ -35,17 +36,17 @@ const Navbar = () => {
           {!auth.currentUser ? (
             // Show these links only when user is not authenticated
             <>
-              <NavLink 
-                to="/login" 
-                className={({ isActive }) => 
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
                   isActive ? "text-orange-500 font-medium" : "text-gray-600 dark:text-gray-300 hover:text-orange-500 transition-colors duration-200"
                 }
               >
                 Login
               </NavLink>
-              <NavLink 
-                to="/register" 
-                className={({ isActive }) => 
+              <NavLink
+                to="/register"
+                className={({ isActive }) =>
                   isActive ? "text-orange-500 font-medium" : "text-gray-600 dark:text-gray-300 hover:text-orange-500 transition-colors duration-200"
                 }
               >
@@ -55,31 +56,31 @@ const Navbar = () => {
           ) : (
             // Show these links only when user is authenticated
             <>
-              <NavLink 
-                to="/dashboard" 
-                className={({ isActive }) => 
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) =>
                   isActive ? "text-orange-500 font-medium" : "text-gray-600 dark:text-gray-300 hover:text-orange-500 transition-colors duration-200"
                 }
               >
                 Dashboard
               </NavLink>
-              <NavLink 
-                to="/tables" 
-                className={({ isActive }) => 
+              <NavLink
+                to="/tables"
+                className={({ isActive }) =>
                   isActive ? "text-orange-500 font-medium" : "text-gray-600 dark:text-gray-300 hover:text-orange-500 transition-colors duration-200"
                 }
               >
                 Tables
               </NavLink>
-              <NavLink 
-                to="/analytics" 
-                className={({ isActive }) => 
+              <NavLink
+                to="/analytics"
+                className={({ isActive }) =>
                   isActive ? "text-orange-500 font-medium" : "text-gray-600 dark:text-gray-300 hover:text-orange-500 transition-colors duration-200"
                 }
               >
                 Analytics
               </NavLink>
-              <button 
+              <button
                 onClick={handleLogout}
                 className="text-gray-600 dark:text-gray-300 hover:text-orange-500 transition-colors duration-200"
               >
