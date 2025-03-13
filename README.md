@@ -61,6 +61,7 @@ npm install
 npm start
 ```
 
+Live server is [https://kafekolay.web.app](https://kafekolay.web.app)
 The application will be available at [http://localhost:3000](http://localhost:3000)
 
 ## Contributing
